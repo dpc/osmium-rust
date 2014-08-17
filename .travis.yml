@@ -1,5 +1,8 @@
 install:
   - curl http://www.rust-lang.org/rustup.sh | sudo sh -
+  - wget http://download.nanomsg.org/nanomsg-0.4-beta.tar.gz
+  - tar xf nanomsg-0.4-beta.tar.gz
+  - cd nanomsg-0.4-beta/ && ./configure --prefix=$HOME/opt && make install || exit 1
 script:
   - cargo build --verbose
   - cargo test --verbose

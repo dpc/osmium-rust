@@ -11,8 +11,8 @@ path = "src/main.rs"
 [dependencies.sodiumoxide]
 git = "http://github.com/dnaq/sodiumoxide.git"
 
-[dependencies.zmq]
-git = "https://github.com/erickt/rust-zmq.git"
+[dependencies.nanomsg]
+git = "https://github.com/thehydroimpulse/nanomsg.rs.git"
 
 [dependencies.capnp]
 git = "https://github.com/dwrensha/capnproto-rust.git"

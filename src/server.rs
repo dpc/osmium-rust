@@ -1,34 +1,30 @@
 use abox = sodiumoxide::crypto::asymmetricbox;
 use capnp;
-use capnp::message::{MessageReader, MessageBuilder};
-use capnp_zmq;
+use capnp::message::{MessageReader, MessageBuilder, ReaderOptions};
+use capnp::serialize_packed;
+use std::io;
 use std::str;
-use zmq;
 
 use schema::request_capnp;
 use schema::reply_capnp;
 
+use nanomsg::{NanoSocket};
+use nanomsg::{AF_SP,NN_PAIR};
 
 pub fn server() {
-    let mut ctx = zmq::Context::new();
+    let sock = NanoSocket::new(AF_SP, NN_PAIR).unwrap();
 
-    let mut socket = match ctx.socket(zmq::REP) {
-        Ok(socket) => { socket },
-        Err(e) => { fail!(e.to_string()) }
-    };
-
-    assert!(socket.bind(::server_addr).is_ok());
+    sock.bind(::server_addr).unwrap();
 
     info!("Listening on {}", ::server_addr);
 
     let (pub_key, sec_key) = abox::gen_keypair();
 
     loop {
-        let frames = capnp_zmq::recv(&mut socket).unwrap();
-        let segments = capnp_zmq::frames_to_segments(frames.as_slice());
-        let reader = capnp::message::SegmentArrayMessageReader::new(
-            segments.as_slice(),
-            capnp::message::DefaultReaderOptions);
+        let req = sock.recv().unwrap();
+
+        let mut reader = io::MemReader::new(req);
+        let reader = serialize_packed::new_reader_unbuffered(&mut reader, ReaderOptions::new()).unwrap();
         let req = reader.get_root::<request_capnp::Request::Reader>();
 
         match str::from_utf8(req.get_data().as_slice()) {
@@ -48,6 +44,9 @@ pub fn server() {
             rep.set_key(pub_key.as_slice());
             rep.set_nonce(nonce.as_slice());
         }
-        capnp_zmq::send(&mut socket, &mut message).unwrap();
+
+        let mut writer = io::MemWriter::new();
+        serialize_packed::write_packed_message_unbuffered(&mut writer, &message).unwrap();
+        sock.send(writer.unwrap().as_slice()).unwrap();
     }
 }

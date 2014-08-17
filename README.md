@@ -4,13 +4,13 @@ Osmium is currently just a toy project exercising:
 
 * [Rust language][rust],
 * [capnproto][capnproto],
-* [zeromq][zeromq],
+* [nanomsg][nanomsg],
 * [sodiumoxide][sodiumoxide],
 * and [cargo][cargo].
 
 [rust]: http://www.rust-lang.org/
 [capnproto]: https://github.com/dwrensha/capnproto-rust
-[zeromq]: https://github.com/erickt/rust-zmq
+[nanomsg]: https://github.com/thehydroimpulse/nanomsg.rs
 [sodiumoxide]: https://github.com/dnaq/sodiumoxide
 [cargo]: http://crates.io/
 
