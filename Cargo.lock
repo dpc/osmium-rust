@@ -1,0 +1,24 @@
+[root]
+name = "osmium"
+version = "0.0.1"
+dependencies = [
+ "capnp 0.1.0 (git+https://github.com/dwrensha/capnproto-rust.git#38a378bd59dd0e6cd731c2c07c4e44806e387f2d)",
+ "sodiumoxide 0.0.0 (git+http://github.com/dnaq/sodiumoxide.git#571ff99bab6923efec7ca9a4f7c85dc7500215c8)",
+ "zmq 0.5.1 (git+https://github.com/erickt/rust-zmq.git#e3fa6192ed6808d0c870449fbe6fbebda2c8c3fa)",
+]
+
+[[package]]
+name = "capnp"
+version = "0.1.0"
+source = "git+https://github.com/dwrensha/capnproto-rust.git#38a378bd59dd0e6cd731c2c07c4e44806e387f2d"
+
+[[package]]
+name = "sodiumoxide"
+version = "0.0.0"
+source = "git+http://github.com/dnaq/sodiumoxide.git#571ff99bab6923efec7ca9a4f7c85dc7500215c8"
+
+[[package]]
+name = "zmq"
+version = "0.5.1"
+source = "git+https://github.com/erickt/rust-zmq.git#e3fa6192ed6808d0c870449fbe6fbebda2c8c3fa"
+

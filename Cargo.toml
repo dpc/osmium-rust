@@ -1,0 +1,18 @@
+[package]
+name = "osmium"
+version = "0.0.1"
+authors = [ "dpc@ucore.info" ]
+build = "make capnpc"
+
+[[bin]]
+name = "osmium"
+path = "src/main.rs"
+
+[dependencies.sodiumoxide]
+git = "http://github.com/dnaq/sodiumoxide.git"
+
+[dependencies.zmq]
+git = "https://github.com/erickt/rust-zmq.git"
+
+[dependencies.capnp]
+git = "https://github.com/dwrensha/capnproto-rust.git"
