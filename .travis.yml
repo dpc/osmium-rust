@@ -1,8 +1,33 @@
+before_install:
+  - sudo apt-get update
 install:
-  - curl http://www.rust-lang.org/rustup.sh | sudo sh -
+  - pwd
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update
+  - sudo apt-get install -y gcc-4.7 g++-4.7 subversion git
+  - export CC=gcc-4.7
+  - export CXX=g++-4.7
+  - git clone https://github.com/kentonv/capnproto.git
+  - cd capnproto/c++
+  - ./setup-autotools.sh
+  - autoreconf -i && ./configure && make -j6 check && sudo make install
+  - cd ..
+  - pwd
   - wget http://download.nanomsg.org/nanomsg-0.4-beta.tar.gz
   - tar xf nanomsg-0.4-beta.tar.gz
   - cd nanomsg-0.4-beta/ && ./configure --prefix=$HOME/opt && make install || exit 1
+  - cd ..
+  - pwd
+  - curl http://www.rust-lang.org/rustup.sh | sudo sh -
+  - git clone https://github.com/dwrensha/capnproto-rust.git
+  - cd capnproto-rust
+  - cargo build
+  - sudo mkdir -p /usr/local/bin/
+  - sudo cp target/capnpc-rust /usr/local/bin/
+  - cd ..
+before_script:
+  - rustc --version
 script:
+  - pwd
   - cargo build --verbose
   - cargo test --verbose
