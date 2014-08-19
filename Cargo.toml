@@ -9,7 +9,9 @@ name = "osmium"
 path = "src/main.rs"
 
 [dependencies.sodiumoxide]
-git = "http://github.com/dnaq/sodiumoxide.git"
+# Use my own fork, until my PR is merged
+# git = "http://github.com/dnaq/sodiumoxide.git"
+git = "http://github.com/dpc/sodiumoxide.git"
 
 [dependencies.nanomsg]
 git = "https://github.com/thehydroimpulse/nanomsg.rs.git"
